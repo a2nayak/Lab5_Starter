@@ -7,9 +7,9 @@ let voiceListUpdated = false;
 function updateVoiceList() {
     if(voiceListUpdated) return;
     let voiceSelect = document.querySelector('#explore > select');
-    if(voiceSelect) voiceListUpdated = true;
-    else return;
     let voices = speechSynthesis.getVoices();
+    if(voiceSelect && voices && voices.length > 0) voiceListUpdated = true;
+    else return;
     for (let i in voices) {
         let voiceOption = document.createElement('option');
         voiceOption.textContent = voices[i].name;
