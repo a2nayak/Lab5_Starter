@@ -4,12 +4,17 @@ window.addEventListener('DOMContentLoaded', init);
 
 let voiceListUpdated = false;
 
+const voiceListUpdatePoll = setInterval(() => {
+    updateVoiceList();
+}, 100);
+
 function updateVoiceList() {
     if(voiceListUpdated) return;
     let voiceSelect = document.querySelector('#explore > select');
     let voices = speechSynthesis.getVoices();
     if(voiceSelect.childElementCount > 1){
         voiceListUpdated = true;
+        voiceListUpdatePoll.clearInterval();
         return;
     }
     for (let i in voices) {
@@ -19,10 +24,6 @@ function updateVoiceList() {
         voiceSelect.appendChild(voiceOption);
     }
 }
-
-document.body.addEventListener('click', () => { // nuclear option
-    if (!voiceListUpdated) updateVoiceList();
-});
 
 function init() {
     let voiceSelect = document.querySelector('#explore > select');
